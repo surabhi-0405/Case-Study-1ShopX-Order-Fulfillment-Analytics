@@ -1,0 +1,60 @@
+Case study 1  Measures 
+
+Average Shipment-to-Delivery Days = 
+AVERAGE(
+    'shopx_dwh delivery_analytics'[shipment_to_delivery_days]
+)
+--------------------------------------------------------------------------------
+Average Order-to-Delivery Days = 
+AVERAGE(
+    'shopx_dwh delivery_analytics'[order_to_delivery_days]
+)
+--------------------------------------------------------------------------------
+Average Order-to-Ship Days = 
+AVERAGE(
+    'shopx_dwh delivery_analytics'[order_to_ship_days]
+)
+--------------------------------------------------------------------------------
+Orders In Delivery = 
+CALCULATE(
+    COUNTROWS('shopx_dwh delivery_analytics'),
+    'shopx_dwh delivery_analytics'[fulfillment_status] = "In Delivery"
+)
+--------------------------------------------------------------------------------
+Orders In Processing = 
+CALCULATE(
+    COUNTROWS('shopx_dwh delivery_analytics'),
+    'shopx_dwh delivery_analytics'[fulfillment_status] = "Order Processing"
+)
+--------------------------------------------------------------------------------
+Customer Order Fulfillment Rate = 
+DIVIDE(
+    [Delivered Orders],
+    [Total Orders],
+    0
+)
+--------------------------------------------------------------------------------
+Delivered Orders = 
+CALCULATE(
+    COUNTROWS('shopx_dwh delivery_analytics'),
+    'shopx_dwh delivery_analytics'[fulfillment_status] = "Delivered"
+)
+--------------------------------------------------------------------------------
+Total Orders = 
+COUNTROWS('shopx_dwh orders')
+--------------------------------------------------------------------------------
+Delivered Shipments = 
+CALCULATE(
+    COUNTROWS('shopx_dwh shipments'),
+    'shopx_dwh shipments'[shipment_status] = "Delivered"
+)
+--------------------------------------------------------------------------------
+In Transit Shipments = 
+CALCULATE(
+    COUNTROWS('shopx_dwh shipments'),
+    'shopx_dwh shipments'[shipment_status] = "In Transit"
+)
+--------------------------------------------------------------------------------
+Total Shipments = 
+COUNTROWS('shopx_dwh shipments')
+--------------------------------------------------------------------------------
